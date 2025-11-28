@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FrancisArt VR Gallery - Tuscan Summer</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- A-Frame Physics System for robust walking controls and collision detection -->
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v5.0.1/dist/aframe-physics-system.min.js"></script>
+</head>
+<body>
+    <a-scene physics="gravity: -9.8; debug: false">
+        <!-- Assets -->
+        <a-assets>
+            <img id="pano1" src="pano1.webp">
+            <img id="art0" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_200719149.jpg">
+            <img id="art1" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_200731771.jpg">
+            <img id="art2" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_200833238.jpg">
+            <img id="art3" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_200911021.jpg">
+            <img id="art4" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_200957157.jpg">
+            <img id="art5" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_201021117.jpg">
+            <img id="art6" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_201313093.jpg">
+            <img id="art7" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_201419194.jpg">
+            <img id="art8" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_201637477.jpg">
+            <img id="art9" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_201701214.jpg">
+            <img id="art10" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_201827754.jpg">
+            <img id="art11" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_201945526.jpg">
+            <img id="art12" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_210153565.jpg">
+            <img id="art13" src="FrancisRosario1_assets/FrancisArt1/PXL_20251125_210413377.jpg">
+        </a-assets>
+
+        <!-- Camera and Controls (Player Rig with Kinematic Body for walking/collision) -->
+        <a-entity id="player"
+                  position="0 1.6 0"
+                  kinematic-body="radius: 0.3; height: 1.6"
+                  wasd-controls="acceleration: 100; fly: false; easing: 10;">
+            <a-camera look-controls></a-camera>
+        </a-entity>
+
+        <!-- Environment -->
+        <a-sky src="#pano1"></a-sky>
+        <a-plane id="floor" static-body position="0 -0.05 0" rotation="-90 0 0" width="100" height="100" color="#f5deb3" shadow="receive: true;"></a-plane> 
+        <!-- Warm, light wheat color for the ground, making it spacious -->
+
+        <!-- Lighting - Warm, soft with peachy/golden tones -->
+        <a-entity light="type: ambient; color: #ffe0b2; intensity: 0.7"></a-entity> <!-- Soft peach ambient light -->
+        <a-entity light="type: directional; color: #fff8dc; intensity: 0.6; position: -5 15 5; castShadow: true; shadowCameraFar: 50; shadowMapHeight: 1024; shadowMapWidth: 1024;" rotation="-45 45 0"></a-entity> <!-- Golden sun-like directional light -->
+        <a-entity light="type: point; color: #ffdab9; intensity: 0.4; position: 8 3 -8; decay: 2;"></a-entity> <!-- Peach point light -->
+        <a-entity light="type: point; color: #ffd700; intensity: 0.3; position: -8 3 8; decay: 2;"></a-entity> <!-- Golden point light -->
+
+        <!-- Art Display (14 photos) - Arranged in a large circle (radius ~15m) for an open park feel -->
+        <!-- Each image is positioned at eye level (y=1.6m) and rotated to face inwards -->
+        <a-image src="#art0" width="3.5" height="2.8" position="0 1.6 -15" rotation="0 0 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art1" width="3.5" height="2.8" position="6.1 1.6 -13.7" rotation="0 -25.71 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art2" width="3.5" height="2.8" position="10.8 1.6 -9.8" rotation="0 -51.42 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art3" width="3.5" height="2.8" position="14.3 1.6 -3.9" rotation="0 -77.13 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art4" width="3.5" height="2.8" position="14.3 1.6 3.9" rotation="0 -102.84 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art5" width="3.5" height="2.8" position="10.8 1.6 9.8" rotation="0 -128.55 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art6" width="3.5" height="2.8" position="6.1 1.6 13.7" rotation="0 -154.26 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art7" width="3.5" height="2.8" position="0 1.6 15" rotation="0 -180 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art8" width="3.5" height="2.8" position="-6.1 1.6 13.7" rotation="0 -205.71 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art9" width="3.5" height="2.8" position="-10.8 1.6 9.8" rotation="0 -231.42 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art10" width="3.5" height="2.8" position="-14.3 1.6 3.9" rotation="0 -257.13 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art11" width="3.5" height="2.8" position="-14.3 1.6 -3.9" rotation="0 -282.84 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art12" width="3.5" height="2.8" position="-10.8 1.6 -9.8" rotation="0 -308.55 0" shadow="cast: true; receive: false;"></a-image>
+        <a-image src="#art13" width="3.5" height="2.8" position="-6.1 1.6 -13.7" rotation="0 -334.26 0" shadow="cast: true; receive: false;"></a-image>
+
+        <!-- Geometric Sculptures and Shapes (80s vibe, Tuscan colors) -->
+        <!-- Central stacked pyramids -->
+        <a-pyramid static-body position="0 0.5 0" radius="2" height="1" color="#f7f7f7" shadow="cast: true;"></a-pyramid> <!-- Off-white -->
+        <a-pyramid static-body position="0 1.5 0" radius="1.5" height="1" color="#eedd82" shadow="cast: true;"></a-pyramid> <!-- Light goldenrod yellow -->
+        <a-pyramid static-body position="0 2.5 0" radius="1" height="1" color="#ffdab9" shadow="cast: true;"></a-pyramid> <!-- Peach puff -->
+        
+        <!-- Spheres -->
+        <a-sphere static-body position="-7 0.7 7" radius="0.7" color="#dda0dd" shadow="cast: true;"></a-sphere> <!-- Soft plum accent -->
+        <a-sphere static-body position="7 0.7 -7" radius="0.7" color="#ffd700" shadow="cast: true;"></a-sphere> <!-- Gold -->
+        <a-sphere static-body position="10 0.5 0" radius="0.5" color="#ffe0b2" shadow="cast: true;"></a-sphere> <!-- Light peach -->
+
+        <!-- Toruses -->
+        <a-torus static-body position="-10 1 0" radius="1" radius-tubular="0.2" rotation="90 0 0" color="#cd853f" shadow="cast: true;"></a-torus> <!-- Peru brown -->
+        <a-torus static-body position="0 1 -10" radius="1" radius-tubular="0.2" rotation="0 90 0" color="#f5deb3" shadow="cast: true;"></a-torus> <!-- Wheat -->
+
+        <!-- Cones -->
+        <a-cone static-body position="8 1.5 8" radius-bottom="1" height="1.5" color="#ffa07a" shadow="cast: true;"></a-cone> <!-- Light salmon -->
+        <a-cone static-body position="-8 1.5 -8" radius-bottom="1" height="1.5" color="#fff8dc" shadow="cast: true;"></a-cone> <!-- Cornsilk -->
+        
+        <!-- Additional decorative shapes for 80s geometric patterns -->
+        <a-box static-body position="-3 0.5 4" width="1" height="1" depth="1" color="#a7f0ba" shadow="cast: true;"></a-box> <!-- Light mint green -->
+        <a-cylinder static-body position="3 0.5 -4" radius="0.5" height="1" color="#e0b2ff" shadow="cast: true;"></a-cylinder> <!-- Light lavender -->
+        <a-dodecahedron static-body position="-12 1 -12" radius="1" color="#ff7f50" shadow="cast: true;"></a-dodecahedron> <!-- Coral -->
+        <a-octahedron static-body position="12 1 12" radius="1" color="#daa520" shadow="cast: true;"></a-octahedron> <!-- Goldenrod -->
+
+    </a-scene>
+</body>
+</html>
