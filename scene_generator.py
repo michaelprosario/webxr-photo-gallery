@@ -28,7 +28,7 @@ class AFrameSceneGenerator:
             raise ValueError("GEMINI_API_KEY environment variable not set")
         
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
     
     def _ensure_output_directory(self):
         """Ensure the scene output directory exists"""
@@ -150,6 +150,9 @@ REQUIREMENTS:
 7. Add ambient particle effects or subtle animations for atmosphere
 8. Position the camera at a comfortable standing height (1.6m)
 9. Include WASD movement controls and look-around with mouse/VR headset
+10. Please exclude using particle systems for now.
+11. Only use images provided.
+12. Double check that I can walk around th e scnene 
 
 PHOTO PATHS (use these exact paths in your src attributes):
 {chr(10).join(photo_list[:20])}  
@@ -160,7 +163,6 @@ TECHNICAL REQUIREMENTS:
 - Include A-Frame CDN (latest version)
 - Use <a-image> entities for photos with proper positioning
 - Photos should be arranged on walls at eye level (1.6m height)
-- Space photos 2-3 meters apart
 - Use <a-sky> for background with warm gradient color
 - Add <a-plane> for floor with subtle texture
 - Include geometric decorative elements positioned throughout
