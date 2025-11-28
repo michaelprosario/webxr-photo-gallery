@@ -1,0 +1,17 @@
+As a user, I need a FAST API to import photos from a particular folder into my archive of photos.
+- fast api should be implemented using python
+- I should be able to specify a folder to import images from
+- The system should reduce the images to size that's reasonable for web application download
+- make a nice readme to teach me how to install the software
+- photo archive should be stored using file system and folders
+- I should be able to give the imported files a collection name
+
+====
+
+Add api to generate a aframeScene
+- This use case should use google gemini for scene generation
+- aframeScenes should be stored in sceneOutput folder
+- api should specify a list of collection names
+- Using https://aframe.io/, create an art gallery scene for my collection of photos from each collection
+- Art inspiration: Light, warm summer tuskin. Airy, 80s
+- Add other geometric shapes to make the art gallery artful
