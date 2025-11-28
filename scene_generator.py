@@ -143,16 +143,16 @@ class AFrameSceneGenerator:
 REQUIREMENTS:
 1. The gallery should display {len(all_photos)} photos from these collections: {', '.join(collection_names)}
 2. Art style inspiration: Light, warm summer Tuscan aesthetic. Airy, 80s vibe.
+2.1 Place the art in open park area
+2.2 Decorate the open park area with geometric sculptures and shapes
 3. Use warm, soft lighting with peachy/golden tones
 4. Include geometric shapes (spheres, toruses, cones, pyramids) as artistic elements throughout the space
-5. Create multiple rooms or areas, one for each collection if possible
-6. Use textured walls (consider stucco, marble, or painted textures)
-7. Add ambient particle effects or subtle animations for atmosphere
 8. Position the camera at a comfortable standing height (1.6m)
 9. Include WASD movement controls and look-around with mouse/VR headset
 10. Please exclude using particle systems for now.
 11. Only use images provided.
 12. Double check that I can walk around th e scnene 
+13. Use pano1.webp as the pano background image
 
 PHOTO PATHS (use these exact paths in your src attributes):
 {chr(10).join(photo_list[:20])}  
