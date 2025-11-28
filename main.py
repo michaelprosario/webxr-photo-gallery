@@ -4,16 +4,31 @@ from pydantic import BaseModel
 from typing import List, Optional
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from photo_manager import PhotoArchiveManager
 from image_processor import ImageProcessor
+from scene_generator import AFrameSceneGenerator
 
 app = FastAPI(title="Photo Archive API", version="1.0.0")
 
 # Initialize managers
 ARCHIVE_BASE_PATH = os.getenv("ARCHIVE_PATH", "./photo_archive")
+SCENE_OUTPUT_PATH = os.getenv("SCENE_OUTPUT_PATH", "./sceneOutput")
 photo_manager = PhotoArchiveManager(ARCHIVE_BASE_PATH)
 image_processor = ImageProcessor()
+
+# Initialize scene generator (lazy loading to handle missing API key gracefully)
+scene_generator = None
+
+def get_scene_generator():
+    global scene_generator
+    if scene_generator is None:
+        scene_generator = AFrameSceneGenerator(SCENE_OUTPUT_PATH)
+    return scene_generator
 
 
 class ImportRequest(BaseModel):
@@ -32,6 +47,20 @@ class ImportResponse(BaseModel):
     details: List[dict]
 
 
+class GenerateSceneRequest(BaseModel):
+    collection_names: List[str]
+    scene_name: Optional[str] = None
+
+
+class GenerateSceneResponse(BaseModel):
+    scene_name: str
+    collections: List[str]
+    photo_count: int
+    created_at: str
+    file_path: str
+    assets_directory: str
+
+
 @app.get("/")
 async def root():
     """Welcome endpoint with API information"""
@@ -42,6 +71,8 @@ async def root():
             "/import": "Import photos from a folder",
             "/collections": "List all collections",
             "/collections/{name}": "Get collection details",
+            "/scenes/generate": "Generate A-Frame VR gallery scene",
+            "/scenes": "List all generated scenes",
             "/health": "Health check"
         }
     }
@@ -182,6 +213,62 @@ async def delete_collection(collection_name: str):
         return {"message": f"Collection '{collection_name}' deleted successfully"}
     else:
         raise HTTPException(status_code=500, detail="Failed to delete collection")
+
+
+@app.post("/scenes/generate", response_model=GenerateSceneResponse)
+async def generate_scene(request: GenerateSceneRequest):
+    """
+    Generate an A-Frame VR art gallery scene for specified photo collections.
+    
+    Uses Google Gemini AI to create an immersive 3D gallery with Tuscan-inspired,
+    airy 80s aesthetic featuring warm lighting and geometric artistic elements.
+    
+    - **collection_names**: List of collection names to include in the gallery
+    - **scene_name**: Optional custom name for the scene (auto-generated if not provided)
+    """
+    # Validate collections exist
+    for collection_name in request.collection_names:
+        if not photo_manager.collection_exists(collection_name):
+            raise HTTPException(
+                status_code=404, 
+                detail=f"Collection not found: {collection_name}"
+            )
+    
+    try:
+        generator = get_scene_generator()
+        metadata = generator.generate_scene(
+            collection_names=request.collection_names,
+            photo_manager=photo_manager,
+            scene_name=request.scene_name
+        )
+        
+        return GenerateSceneResponse(**metadata)
+        
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error generating scene: {str(e)}"
+        )
+
+
+@app.get("/scenes")
+async def list_scenes():
+    """List all generated A-Frame VR gallery scenes"""
+    try:
+        generator = get_scene_generator()
+        scenes = generator.list_scenes()
+        
+        return {
+            "total_scenes": len(scenes),
+            "scenes": scenes
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error listing scenes: {str(e)}"
+        )
 
 
 if __name__ == "__main__":
